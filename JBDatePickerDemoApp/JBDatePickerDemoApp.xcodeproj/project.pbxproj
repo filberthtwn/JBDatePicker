@@ -27,7 +27,6 @@
 		C857B8311E94D8BA00150614 /* JBDatePickerWeekDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C857B8221E94D8BA00150614 /* JBDatePickerWeekDaysView.swift */; };
 		C857B8321E94D8BA00150614 /* JBDatePickerWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C857B8231E94D8BA00150614 /* JBDatePickerWeekView.swift */; };
 		C857B8331E94D8BA00150614 /* JBFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C857B8241E94D8BA00150614 /* JBFont.swift */; };
-		C857B8341E94D8BA00150614 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C857B8251E94D8BA00150614 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -191,7 +190,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C857B8341E94D8BA00150614 /* Info.plist in Resources */,
 				C857B8051E94D68600150614 /* LaunchScreen.storyboard in Resources */,
 				C857B8021E94D68600150614 /* Assets.xcassets in Resources */,
 				C857B8131E94D74400150614 /* Main.storyboard in Resources */,

@@ -109,10 +109,45 @@ class CodedDatePickerViewController: UIViewController, JBDatePickerViewDelegate 
     
     //custom selection shape
     var selectionShape: JBSelectionShape {
-        return .roundedRect
+        return .fullBackground
     }
     
+    public var colorForDayLabelInMonth: UIColor { return .darkGray }
+    public var colorForDayLabelInMonthBackground: UIColor { return .lightGray }
+    public var colorForDayLabelOutOfMonth: UIColor { return .lightGray }
+    public var colorForDayLabelOutOfMonthBackground: UIColor { return .yellow }
+    public var colorForUnavailableDay: UIColor { return .lightGray }
+    public var colorForUnavailableDayBackground: UIColor { return .green }
 
-
-
+    func shouldAllowSelectionOfDay(_ date: Date?) -> Bool {
+        
+        //this code example disables selection for dates older then today
+        guard let date = date else {return true}
+        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: date)
+        
+        if weekday == 6 || weekday == 7 {
+            return false
+        }
+        return true
+    }
+    
+    func colorForSpecificDate(_ date: Date?) -> UIColor? {
+        guard let date = date else {return nil}
+        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: date)
+        
+        if weekday == 6 {
+            return UIColor.blue
+        }
+        return nil
+    }
+    
+    func colorForSpecificDateBackground(_ date: Date?) -> UIColor? {
+        guard let date = date else {return nil}
+        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: date)
+        
+        if weekday == 6 {
+            return UIColor.purple
+        }
+        return nil
+    }
 }

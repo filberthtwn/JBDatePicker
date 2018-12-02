@@ -51,6 +51,16 @@ public protocol JBDatePickerViewDelegate: class {
      This color will overwrite colorForDayLabelInMonth and colorForUnavailableDay
      */
     func colorForSpecificDate(_ date:Date?) -> UIColor?
+    
+    /**
+     Is called to check if any specific color for background
+     - parameter date: the date to check if there any specific color for background
+     - note:
+     Implementing this method is optional.
+     Return nil if there is none, and datepicker will use default color
+     This color will overwrite colorForDayLabelInMonthBackground and colorForUnavailableDayBackground
+     */
+    func colorForSpecificDateBackground(_ date:Date?) -> UIColor?
 
     /**
      Sets the day that determines which month is shown on initial load
@@ -99,7 +109,7 @@ public protocol JBDatePickerViewDelegate: class {
     
     /**
      Determines the shape that is used to indicate a selected date. Possiblilities are:
-     .circle, .square, .roundedRect
+     .circle, .square, .roundedRect, .fullBackground
      
      - note: 
      Implementing this variable is optional. It's default is set to .circle.
@@ -136,11 +146,20 @@ public protocol JBDatePickerViewDelegate: class {
     ///color of any date label text that falls within the presented month
     var colorForDayLabelInMonth: UIColor { get }
     
+    ///color of any date label background that falls within the presented month
+    var colorForDayLabelInMonthBackground: UIColor { get }
+    
     ///color of any date label text that falls out of the presented month and is part of the next or previous (but not presented) month
     var colorForDayLabelOutOfMonth: UIColor { get }
     
+    ///color of any date label background that falls out of the presented month and is part of the next or previous (but not presented) month
+    var colorForDayLabelOutOfMonthBackground: UIColor { get }
+    
     ///color of any date label text that occurs outside the allowed selectable days (day earlier than earliest selectable or later than last selectable)
     var colorForUnavailableDay: UIColor { get }
+    
+    ///color of any date label background that occurs outside the allowed selectable days (day earlier than earliest selectable or later than last selectable)
+    var colorForUnavailableDayBackground: UIColor { get }
     
     ///color of the 'today' date label text
     var colorForCurrentDay: UIColor { get }
@@ -205,6 +224,7 @@ public extension JBDatePickerViewDelegate {
     public func shouldAllowSelectionOfDay(_ date: Date?) -> Bool { return true }
     public func weekdaySymbols(for calendar: Calendar) -> [String] { return calendar.shortStandaloneWeekdaySymbols }
     public func colorForSpecificDate(_ date:Date?) -> UIColor? { return nil }
+    public func colorForSpecificDateBackground(_ date:Date?) -> UIColor? { return nil }
     
     // MARK: - General defaults
     
@@ -228,8 +248,11 @@ public extension JBDatePickerViewDelegate {
     // MARK: - Color defaults
     
     public var colorForDayLabelInMonth: UIColor { return .darkGray }
+    public var colorForDayLabelInMonthBackground: UIColor { return .clear }
     public var colorForDayLabelOutOfMonth: UIColor { return .lightGray }
+    public var colorForDayLabelOutOfMonthBackground: UIColor { return .clear }
     public var colorForUnavailableDay: UIColor { return .lightGray }
+    public var colorForUnavailableDayBackground: UIColor { return .clear }
     public var colorForCurrentDay: UIColor { return .red }
     public var colorForSelectedDayLabel: UIColor { return .white }
     public var colorForWeekDaysViewBackground: UIColor { return  UIColor(red: 81.0/255.0, green: 182.0/255.0, blue: 185.0/255.0, alpha: 1.0) }

@@ -143,6 +143,10 @@ extension JBDatePickerView {
         return delegate?.colorForSpecificDate(date)
     }
     
+    func colorForSpecificDateBackground(date: Date?) -> UIColor? {
+        return delegate?.colorForSpecificDateBackground(date)
+    }
+    
     ///this will call the delegate as well as set the selectedDate on the datePicker. 
     func didTapDayView(dayView: JBDatePickerDayView) {
         selectedDateView = dayView

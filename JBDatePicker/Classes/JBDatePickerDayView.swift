@@ -30,6 +30,8 @@ public final class JBDatePickerDayView: UIView {
     private var longPressAreaMaxY: CGFloat { return bounds.height + longPressArea }
     private var longPressAreaMin: CGFloat { return -longPressArea }
     
+    private var backgroundView:UIView!
+    
     
     // MARK: - Initialization
     
@@ -54,20 +56,29 @@ public final class JBDatePickerDayView: UIView {
         //backgroundColor = randomColor()
         self.date = dayInfo.date
         labelSetup()
-        
+        backgroundViewSetup()
+    
         if dayInfo.isInMonth {
             
             //set default color
             textLabel.textColor = datePickerView.delegate?.colorForDayLabelInMonth
+            backgroundView.backgroundColor = datePickerView.delegate?.colorForDayLabelInMonthBackground
             
             if let color = datePickerView.colorForSpecificDate(date: date) {
                 self.textLabel.textColor = color
+            }
+            
+            if let backgroundColor = datePickerView.colorForSpecificDateBackground(date: date) {
+                self.backgroundView.backgroundColor = backgroundColor
             }
             
             //check date is selectable, if not selectable, set colour and don't add gestures
             guard datePickerView.dateIsSelectable(date: date) else {
                 if datePickerView.colorForSpecificDate(date: date) == nil {
                     self.textLabel.textColor = datePickerView.delegate?.colorForUnavailableDay
+                }
+                if datePickerView.colorForSpecificDateBackground(date: date) == nil {
+                    self.backgroundView.backgroundColor = datePickerView.delegate?.colorForUnavailableDayBackground
                 }
                 return
             }
@@ -78,6 +89,7 @@ public final class JBDatePickerDayView: UIView {
             if let shouldShow = datePickerView.delegate?.shouldShowMonthOutDates {
                 if shouldShow {
                     textLabel.textColor = datePickerView.delegate?.colorForDayLabelOutOfMonth
+                    backgroundView.backgroundColor = datePickerView.delegate?.colorForDayLabelInMonthBackground
                     
                     //check date is selectable, if not selectable, don't add gestures
                     guard datePickerView.dateIsSelectable(date: date) else {return}
@@ -133,6 +145,19 @@ public final class JBDatePickerDayView: UIView {
         textLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         textLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
 
+    }
+    
+    private func backgroundViewSetup(){
+        backgroundView = UIView()
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.insertSubview(backgroundView, at: 0)
+        
+        backgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 1).isActive = true
+        backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
+        backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 1).isActive = true
+        backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -1).isActive = true
+        
     }
     
     private func setupLabelFont() {
@@ -240,17 +265,15 @@ public final class JBDatePickerDayView: UIView {
     func select() {
 
         let selView = JBDatePickerSelectionView(dayView: self, frame: self.bounds, isSemiSelected: false)
-        insertSubview(selView, at: 0)
+        insertSubview(selView, aboveSubview: backgroundView)
 
         selView.translatesAutoresizingMaskIntoConstraints = false
         
         //pin selectionView horizontally and make it's width equal to the height of the datePickerview. This way it stays centered while rotating the device.
         selView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        selView.widthAnchor.constraint(equalTo: heightAnchor).isActive = true
-        
-        //pint it to the left and right
-        selView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        selView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        selView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        selView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        selView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
         
         selectionView = selView
         

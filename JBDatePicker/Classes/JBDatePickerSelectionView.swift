@@ -53,6 +53,12 @@ class JBDatePickerSelectionView: UIView {
         return path.cgPath
     }
     
+    private var fullBackgroundPath: CGPath {
+        let path = UIBezierPath(rect: CGRect(x: frame.origin.x + 1, y: frame.origin.y + 1, width: frame.size.width - 2, height: frame.size.height - 2))
+        
+        return path.cgPath
+    }
+    
     private var fillColor: UIColor {
         
         switch isSemiSelected {
@@ -79,6 +85,8 @@ class JBDatePickerSelectionView: UIView {
             return squarePath
         case .roundedRect:
             return roundedRectPath
+        case .fullBackground:
+            return fullBackgroundPath
         }
     }
     
