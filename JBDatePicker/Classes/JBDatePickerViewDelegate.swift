@@ -41,6 +41,16 @@ public protocol JBDatePickerViewDelegate: class {
      Implementing this method is optional.
      */
     func weekdaySymbols(for calendar: Calendar) -> [String]
+    
+    /**
+     Is called to check if any specific color
+     - parameter date: the date to check if there any specific color
+     - note:
+     Implementing this method is optional.
+     Return nil if there is none, and datepicker will use default color
+     This color will overwrite colorForDayLabelInMonth and colorForUnavailableDay
+     */
+    func colorForSpecificDate(_ date:Date?) -> UIColor?
 
     /**
      Sets the day that determines which month is shown on initial load
@@ -130,13 +140,13 @@ public protocol JBDatePickerViewDelegate: class {
     var colorForDayLabelOutOfMonth: UIColor { get }
     
     ///color of any date label text that occurs outside the allowed selectable days (day earlier than earliest selectable or later than last selectable)
-    var colorForUnavaibleDay: UIColor { get }
+    var colorForUnavailableDay: UIColor { get }
     
     ///color of the 'today' date label text
     var colorForCurrentDay: UIColor { get }
     
     ///color of any label text that is selected
-    var colorForSelelectedDayLabel: UIColor { get }
+    var colorForSelectedDayLabel: UIColor { get }
     
     
     // MARK: - WeekdaysView appearance properties
@@ -194,6 +204,7 @@ public extension JBDatePickerViewDelegate {
     public func didPresentOtherMonth(_ monthView: JBDatePickerMonthView) {}
     public func shouldAllowSelectionOfDay(_ date: Date?) -> Bool { return true }
     public func weekdaySymbols(for calendar: Calendar) -> [String] { return calendar.shortStandaloneWeekdaySymbols }
+    public func colorForSpecificDate(_ date:Date?) -> UIColor? { return nil }
     
     // MARK: - General defaults
     
@@ -218,9 +229,9 @@ public extension JBDatePickerViewDelegate {
     
     public var colorForDayLabelInMonth: UIColor { return .darkGray }
     public var colorForDayLabelOutOfMonth: UIColor { return .lightGray }
-    public var colorForUnavaibleDay: UIColor { return .lightGray }
+    public var colorForUnavailableDay: UIColor { return .lightGray }
     public var colorForCurrentDay: UIColor { return .red }
-    public var colorForSelelectedDayLabel: UIColor { return .white }
+    public var colorForSelectedDayLabel: UIColor { return .white }
     public var colorForWeekDaysViewBackground: UIColor { return  UIColor(red: 81.0/255.0, green: 182.0/255.0, blue: 185.0/255.0, alpha: 1.0) }
     public var colorForWeekDaysViewText: UIColor { return .white }
     public var fontForWeekDaysViewText: JBFont { return JBFont() }

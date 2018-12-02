@@ -60,11 +60,17 @@ public final class JBDatePickerDayView: UIView {
             //set default color
             textLabel.textColor = datePickerView.delegate?.colorForDayLabelInMonth
             
-                //check date is selectable, if not selectable, set colour and don't add gestures
-                guard datePickerView.dateIsSelectable(date: date) else {
-                    self.textLabel.textColor = datePickerView.delegate?.colorForUnavaibleDay
-                    return
+            if let color = datePickerView.colorForSpecificDate(date: date) {
+                self.textLabel.textColor = color
+            }
+            
+            //check date is selectable, if not selectable, set colour and don't add gestures
+            guard datePickerView.dateIsSelectable(date: date) else {
+                if datePickerView.colorForSpecificDate(date: date) == nil {
+                    self.textLabel.textColor = datePickerView.delegate?.colorForUnavailableDay
                 }
+                return
+            }
 
         }
         else{
@@ -88,7 +94,7 @@ public final class JBDatePickerDayView: UIView {
         if isToday {
             self.textLabel.textColor = datePickerView.delegate?.colorForCurrentDay
         }
-
+        
         //select selected day
         if date == datePickerView.dateToPresent.stripped() {
             guard self.dayInfo.isInMonth else { return }
@@ -249,7 +255,7 @@ public final class JBDatePickerDayView: UIView {
         selectionView = selView
         
         //set textcolor to selected state
-        textLabel.textColor = datePickerView.delegate?.colorForSelelectedDayLabel
+        textLabel.textColor = datePickerView.delegate?.colorForSelectedDayLabel
     }
     
     func deselect() {
@@ -259,11 +265,15 @@ public final class JBDatePickerDayView: UIView {
         }
         
         //set textcolor to default color
-        switch  isToday {
-        case true:
+        if isToday {
             textLabel.textColor = datePickerView.delegate?.colorForCurrentDay
-        case false:
-            textLabel.textColor = dayInfo.isInMonth ? datePickerView.delegate?.colorForDayLabelInMonth : datePickerView.delegate?.colorForDayLabelOutOfMonth
+        } else if dayInfo.isInMonth {
+            textLabel.textColor = datePickerView.delegate?.colorForDayLabelInMonth
+            if let color = datePickerView.colorForSpecificDate(date: date) {
+                 textLabel.textColor = color
+            }
+        } else {
+            textLabel.textColor = datePickerView.delegate?.colorForDayLabelOutOfMonth
         }
     }
     
