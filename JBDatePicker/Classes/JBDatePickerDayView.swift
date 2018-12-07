@@ -31,8 +31,8 @@ public final class JBDatePickerDayView: UIView {
     private var longPressAreaMin: CGFloat { return -longPressArea }
     
     private var backgroundView:UIView!
-    private let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dayViewTapped))
-    private let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(dayViewPressed(_:)))
+    private var tapGesture:UITapGestureRecognizer?
+    private var pressGesture:UILongPressGestureRecognizer?
     
     // MARK: - Initialization
     
@@ -73,8 +73,12 @@ public final class JBDatePickerDayView: UIView {
     // MARK: - Component Setup
     
     private func resetSetup(){
-        self.removeGestureRecognizer(tapGesture)
-        self.removeGestureRecognizer(pressGesture)
+        if let tapGesture = tapGesture {
+            self.removeGestureRecognizer(tapGesture)
+        }
+        if let pressGesture = pressGesture {
+            self.removeGestureRecognizer(pressGesture)
+        }
     }
     
     private func componentSetup(){
@@ -137,9 +141,13 @@ public final class JBDatePickerDayView: UIView {
         }
         
         //add tapgesture recognizer
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(dayViewTapped))
+        guard let tapGesture = tapGesture else { return }
         self.addGestureRecognizer(tapGesture)
         
         //add longPress gesture recognizer
+        pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(dayViewPressed(_:)))
+        guard let pressGesture = pressGesture else { return }
         self.addGestureRecognizer(pressGesture)
     }
     
@@ -163,11 +171,10 @@ public final class JBDatePickerDayView: UIView {
         
         self.insertSubview(backgroundView, at: 0)
         
-        backgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 1).isActive = true
-        backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
-        backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 1).isActive = true
-        backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -1).isActive = true
-        
+        backgroundView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        backgroundView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        backgroundView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        backgroundView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     
     private func setupLabelFont() {
