@@ -173,8 +173,8 @@ public final class JBDatePickerDayView: UIView {
         
         backgroundView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         backgroundView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        backgroundView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-        backgroundView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        backgroundView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -2).isActive = true
+        backgroundView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -2).isActive = true
     }
     
     private func setupLabelFont() {
