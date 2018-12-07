@@ -73,6 +73,12 @@ public final class JBDatePickerMonthView: UIStackView {
 
     }
     
+    public func reloadAvailability(){
+        for weekView in weekViews {
+            weekView.reloadAvailability()
+        }
+    }
+    
     // MARK: - Create weekviews
     
     func createWeekViews() {

@@ -60,6 +60,10 @@ class JBDatePickerContentVC: UIViewController, UIScrollViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func reloadAvailability(){
+        presentedMonthView.reloadAvailability()
+    }
+    
     // MARK: - Adding of MonthViews
     
     /**

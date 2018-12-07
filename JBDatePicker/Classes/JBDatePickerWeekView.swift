@@ -61,5 +61,11 @@ final class JBDatePickerWeekView: UIStackView {
         }
         
     }
+    
+    public func reloadAvailability(){
+        for dayView in dayViews {
+            dayView.reloadAvailability()
+        }
+    }
         
 }

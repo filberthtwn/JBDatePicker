@@ -168,3 +168,11 @@ extension JBDatePickerView {
     }
     
 }
+
+extension JBDatePickerView {
+    
+    public func reloadAvailability(){
+        contentController.reloadAvailability()
+    }
+    
+}

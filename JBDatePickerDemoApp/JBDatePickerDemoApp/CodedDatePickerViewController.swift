@@ -15,6 +15,8 @@ class CodedDatePickerViewController: UIViewController, JBDatePickerViewDelegate 
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
     
+    private var forbiddenWeeks:Int = 6
+    
     lazy var dateFormatter: DateFormatter = {
         
         var formatter = DateFormatter()
@@ -46,7 +48,12 @@ class CodedDatePickerViewController: UIViewController, JBDatePickerViewDelegate 
             datePicker.topAnchor.constraint(equalTo: topguideBottom).isActive = true
         }
         
-        
+        self.perform(#selector(refresh), with: nil, afterDelay: 3)
+        forbiddenWeeks = 5
+    }
+    
+    @objc func refresh(){
+        datePicker.reloadAvailability()
     }
     
 
@@ -135,7 +142,7 @@ class CodedDatePickerViewController: UIViewController, JBDatePickerViewDelegate 
         guard let date = date else {return nil}
         let weekday = Calendar(identifier: .gregorian).component(.weekday, from: date)
         
-        if weekday == 6 {
+        if weekday == forbiddenWeeks {
             return UIColor.blue
         }
         return nil
@@ -145,7 +152,7 @@ class CodedDatePickerViewController: UIViewController, JBDatePickerViewDelegate 
         guard let date = date else {return nil}
         let weekday = Calendar(identifier: .gregorian).component(.weekday, from: date)
         
-        if weekday == 6 {
+        if weekday == forbiddenWeeks {
             return UIColor.purple
         }
         return nil

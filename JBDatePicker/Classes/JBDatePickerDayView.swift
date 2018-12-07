@@ -31,7 +31,8 @@ public final class JBDatePickerDayView: UIView {
     private var longPressAreaMin: CGFloat { return -longPressArea }
     
     private var backgroundView:UIView!
-    
+    private let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dayViewTapped))
+    private let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(dayViewPressed(_:)))
     
     // MARK: - Initialization
     
@@ -56,8 +57,29 @@ public final class JBDatePickerDayView: UIView {
         //backgroundColor = randomColor()
         self.date = dayInfo.date
         labelSetup()
-        backgroundViewSetup()
     
+        backgroundViewSetup()
+        componentSetup()
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Component Setup
+    
+    private func resetSetup(){
+        self.removeGestureRecognizer(tapGesture)
+        self.removeGestureRecognizer(pressGesture)
+    }
+    
+    private func componentSetup(){
+        resetSetup()
+        
         if dayInfo.isInMonth {
             
             //set default color
@@ -82,7 +104,7 @@ public final class JBDatePickerDayView: UIView {
                 }
                 return
             }
-
+            
         }
         else{
             
@@ -100,7 +122,7 @@ public final class JBDatePickerDayView: UIView {
                 }
             }
         }
-
+        
         
         //highlight current day. Must come before selection of selected date, because it would override the text color set by select()
         if isToday {
@@ -113,25 +135,13 @@ public final class JBDatePickerDayView: UIView {
             datePickerView.selectedDateView = self
             //self.backgroundColor = randomColor()
         }
-
+        
         //add tapgesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dayViewTapped))
         self.addGestureRecognizer(tapGesture)
         
         //add longPress gesture recognizer
-        let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(dayViewPressed(_:)))
         self.addGestureRecognizer(pressGesture)
-
     }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     
     // MARK: - Label setup
     
@@ -257,6 +267,10 @@ public final class JBDatePickerDayView: UIView {
             selView.setNeedsDisplay()
         }
 
+    }
+    
+    public func reloadAvailability(){
+        componentSetup()
     }
     
     
