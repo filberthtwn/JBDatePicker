@@ -167,7 +167,7 @@
 					C8B39E1B1E94232300D80C05 = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = WTKD2M57Q2;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -354,8 +354,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.timeflower.JBDatePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -375,8 +374,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.timeflower.JBDatePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

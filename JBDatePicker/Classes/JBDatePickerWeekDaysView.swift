@@ -135,7 +135,7 @@ public final class JBDatePickerWeekDaysView: UIStackView {
         for (index, label) in weekdayLabels.enumerated() {
             
             let labelText = weekdayNameSymbols[index]
-            label.attributedText =  NSMutableAttributedString(string: labelText, attributes:[NSAttributedStringKey.font:fontToUse])
+            label.attributedText =  NSMutableAttributedString(string: labelText, attributes:[NSAttributedString.Key.font:fontToUse])
         }
     }
     
